@@ -11,8 +11,8 @@
 --| ---------------------------------------------------------------------------
 --|
 --| FILENAME      : top_basys3.vhd
---| AUTHOR(S)     : Capt Dan Johnson
---| CREATED       : 01/30/2019 Last Modified 06/24/2020
+--| AUTHOR(S)     : Megan Leong
+--| CREATED       : 01/30/2019 Last Modified 02/08/2024
 --| DESCRIPTION   : This file implements the top level module for a BASYS 3 to create a full adder
 --|                 from two half adders.
 --|
@@ -69,16 +69,43 @@ end top_basys3;
 
 architecture top_basys3_arch of top_basys3 is 
 	
-  -- declare the component of your top-level design 
+  -- declare the component of your top-level design
+  component halfAdder is
+          port (
+              i_A : in std_logic;
+              i_B : in std_logic;
+              o_S : out std_logic;
+              o_Cout : out std_logic
+              );
+          end component halfAdder; 
 
-  -- declare any signals you will need	
+  -- declare any signals you will need
+  signal w_S1    : std_logic := '0';
+  signal w_Cout1 : std_logic := '0';
+  signal w_Cout2 : std_logic := '0';    
+  	
   
 begin
 	-- PORT MAPS --------------------
+	halfAdder1_inst: halfAdder
+        port map(
+            i_A     => sw(0),
+            i_B     => sw(1),
+            o_S     => w_S1,
+            o_Cout  => w_Cout1
+        );
+    
+        halfAdder2_inst: halfAdder
+        port map(
+            i_A     => w_S1,
+            i_B     => sw(2),
+            o_S     => led(0),
+            o_Cout  => w_Cout2
+        );
    
 	---------------------------------
 	
 	-- CONCURRENT STATEMENTS --------
-	 led(1) <= -- TODO
+	 led(1) <= w_Cout2 OR w_Cout1;
 	---------------------------------
 end top_basys3_arch;

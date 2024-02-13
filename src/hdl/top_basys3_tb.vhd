@@ -11,8 +11,8 @@
 --| ---------------------------------------------------------------------------
 --|
 --| FILENAME      : top_basys3_tb.vhd
---| AUTHOR(S)     : Capt Johnson
---| CREATED       : 01/30/2019 Last Modified 06/24/2020
+--| AUTHOR(S)     : Megan Leong
+--| CREATED       : 01/30/2019 Last Modified 02/08/2024
 --| DESCRIPTION   : This file implements a test bench for the full adder top level design.
 --|
 --| DOCUMENTATION : None
@@ -59,19 +59,41 @@ architecture test_bench of top_basys3_tb is
   -- declare the component of your top-level design unit under test (UUT)
   component top_basys3 is
       port(
-          -- TODO
+          i_A : in std_logic;
+          i_B : in std_logic;
+          o_S : out std_logic;
+          o_Cout : out std_logic
+                    
       );
   end component;
   
  
 	-- declare signals needed to stimulate the UUT inputs
-	   -- TODO
+	   signal w_S1 : std_logic := '0';
+	   signal w_Cout1 : std_logic := '0';
+	   signal w_Cout2 : std_logic := '0'
 	-- finish declaring needed signals
 begin
 	-- PORT MAPS ----------------------------------------
 	-- You must create the port map for your top_basys3.
 	-- Look at your old test benches if you are unsure what to do
-	-----------------------------------------------------
+	w_sw <= o"0"; wait for 10 ns;
+        assert w_led = "00" report "bad 000" severity failure;
+    w_sw <= o"1"; wait for 10 ns;
+        assert w_led = "01" report "bad 001" severity failure;
+	w_sw <= o"10"; wait for 10 ns;
+        assert w_led = "01" report "bad 010" severity failure;
+    w_sw <= o"11"; wait for 10 ns;
+        assert w_led = "10" report "bad 011" severity failure;
+    w_sw <= o"100"; wait for 10 ns;
+        assert w_led = "01" report "bad 100" severity failure;
+    w_sw <= o"101"; wait for 10 ns;
+        assert w_led = "10" report "bad 101" severity failure;
+    w_sw <= o"110"; wait for 10 ns;
+        assert w_led = "10" report "bad 110" severity failure;
+    w_sw <= o"111"; wait for 10 ns;
+        assert w_led = "11" report "bad 111" severity failure;
+-----------------------------------------------------
 	top_basys3_inst : top_basys3 port map (
 	   sw => w_sw,
 	   led => w_led
