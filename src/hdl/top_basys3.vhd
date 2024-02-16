@@ -80,9 +80,9 @@ architecture top_basys3_arch of top_basys3 is
           end component halfAdder; 
 
   -- declare any signals you will need
-  signal w_S1    : std_logic := '0';
-  signal w_Cout1 : std_logic := '0';
-  signal w_Cout2 : std_logic := '0';    
+  signal w_S1    : std_logic;
+  signal w_Cout1 : std_logic;
+  signal w_Cout2 : std_logic;    
   	
   
 begin
